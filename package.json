@@ -1,7 +1,7 @@
 {
   "name": "tortoise-svn",
   "main": "./lib/tortoise-svn",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "An Atom Plugin for users of TortoiseSvn for Windows",
   "activationCommands": {
     "atom-workspace": [
@@ -24,6 +24,5 @@
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
