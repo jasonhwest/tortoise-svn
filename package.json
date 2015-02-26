@@ -1,0 +1,29 @@
+{
+  "name": "tortoise-svn",
+  "main": "./lib/tortoise-svn",
+  "version": "0.1.0",
+  "description": "An Atom Plugin for users of TortoiseSvn for Windows",
+  "activationCommands": {
+    "atom-workspace": [
+      "tortoise-svn:blameFromTreeView",
+      "tortoise-svn:blameFromEditor",
+      "tortoise-svn:commitFromTreeView",
+      "tortoise-svn:commitFromEditor",
+      "tortoise-svn:diffFromTreeView",
+      "tortoise-svn:diffFromEditor",
+      "tortoise-svn:logFromTreeView",
+      "tortoise-svn:logFromEditor",
+      "tortoise-svn:revertFromTreeView",
+      "tortoise-svn:revertFromEditor",
+      "tortoise-svn:updateFromTreeView",
+      "tortoise-svn:updateFromEditor"
+    ]
+  },
+  "repository": "https://github.com/atom/tortoise-svn",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}

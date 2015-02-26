@@ -1,0 +1,17 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to
+# execute.
+#
+# Below is a basic keybinding which registers on all platforms by applying to
+# the root workspace element.
+
+# For more detailed documentation see
+# https://atom.io/docs/latest/advanced/keymaps
+
+"atom-text-editor":
+  "alt-b": "tortoise-svn:blameFromEditor"
+  "alt-c": "tortoise-svn:commitFromEditor"
+  "alt-d": "tortoise-svn:diffFromEditor"
+  "alt-l": "tortoise-svn:logFromEditor"
+  "alt-r": "tortoise-svn:revertFromEditor"
+  "alt-u": "tortoise-svn:updateFromEditor"
