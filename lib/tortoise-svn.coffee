@@ -22,8 +22,7 @@ resolveTreeSelection = ->
     treeView = atom.packages.getLoadedPackage("tree-view")
     treeView = require(treeView.mainModulePath)
     serialView = treeView.serialize()
-
-  serialView.selectedPath
+    serialView.selectedPath
 
 resolveEditorFile = ->
   editor = atom.workspace.getActivePaneItem();
@@ -35,29 +34,29 @@ resolveEditorFile = ->
 
   file.path
 
-blame: (currFile)->
+blame = (currFile)->
   args = [
     "/command:blame"
     "/path:"+currFile
     "/startrev:1"
     "/endrev:-1"
   ]
-  @tortoiseSvn(args, path.dirname(currFile))
+  tortoiseSvn(args, path.dirname(currFile))
 
-commit: (currFile)->
-  @tortoiseSvn(["/command:commit", "/path:"+currFile], path.dirname(currFile))
+commit = (currFile)->
+  tortoiseSvn(["/command:commit", "/path:"+currFile], path.dirname(currFile))
 
-diff: (currFile)->
-  @tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
+diff = (currFile)->
+  tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
 
-log: (currFile)->
-  @tortoiseSvn(["/command:log", "/path:."], path.dirname(currFile))
+log = (currFile)->
+  tortoiseSvn(["/command:log", "/path:."], path.dirname(currFile))
 
-revert: (currFile)->
-  @tortoiseSvn(["/command:revert", "/path:"+currFile], path.dirname(currFile))
+revert = (currFile)->
+  tortoiseSvn(["/command:revert", "/path:"+currFile], path.dirname(currFile))
 
-update: (currFile)->
-  @tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
+update = (currFile)->
+  tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
 
 module.exports = TortoiseSvn =
   config:
@@ -87,61 +86,61 @@ module.exports = TortoiseSvn =
     atom.workspaceView.command "tortoise-svn:updateFromEditor", => @updateFromEditor()
 
   blameFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @blame(currFile)
+    blame(currFile)
 
   blameFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @blame(currFile)
+    blame(currFile)
 
   commitFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @commit(currFile)
+    commit(currFile)
 
   commitFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @commit(currFile)
+    commit(currFile)
 
   diffFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @diff(currFile)
+    diff(currFile)
 
   diffFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @diff(currFile)
+    diff(currFile)
 
   logFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @log(currFile)
+    log(currFile)
 
   logFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @log(currFile)
+    log(currFile)
 
   revertFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @revert(currFile)
+    revert(currFile)
 
   revertFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @revert(currFile)
+    revert(currFile)
 
   updateFromTreeView: ->
-    currFile = @resolveTreeSelection()
+    currFile = resolveTreeSelection()
     return if !currFile
-    @update(currFile)
+    update(currFile)
 
   updateFromEditor: ->
-    currFile = @resolveEditorFile()
+    currFile = resolveEditorFile()
     return if !currFile
-    @update(currFile)
+    update(currFile)
