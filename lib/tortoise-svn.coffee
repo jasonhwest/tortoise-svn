@@ -1,4 +1,5 @@
 {CompositeDisposable} = require "atom"
+path = require "path"
 
 tortoiseSvn = (args, cwd) ->
   spawn = require("child_process").spawn
@@ -18,29 +19,27 @@ tortoiseSvn = (args, cwd) ->
     console.log "child process exited with code " + code
 
 resolveTreeSelection = ->
+  console.log "is tree-view loaded?"
   if atom.packages.isPackageLoaded("tree-view")
+    console.log "\tyes it is!"
     treeView = atom.packages.getLoadedPackage("tree-view")
+    console.log "\tgot tree-view package"
     treeView = require(treeView.mainModulePath)
+    console.log "\treduced to mainModulePath"
     serialView = treeView.serialize()
+    console.log "\tserializedView"
     serialView.selectedPath
+    console.log "\tpath of serialized view: ", serialView.selectedPath
 
 resolveEditorFile = ->
-  editor = atom.workspace.getActivePaneItem();
-
-  return if !editor
-
-  file = editor.buffer.file;
-  return if !file
-
-  file.path
+  editor = atom.workspace.getActivePaneItem()
+  file = editor?.buffer.file
+  file?.path
 
 blame = (currFile)->
-  args = [
-    "/command:blame"
-    "/path:"+currFile
-    "/startrev:1"
-    "/endrev:-1"
-  ]
+  args = [ "/command:blame", "/path:"+currFile ]
+  args.push("/startrev:1", "/endrev:-1") if atom.config.get("tortoise-svn.tortoiseBlameAll")
+
   tortoiseSvn(args, path.dirname(currFile))
 
 commit = (currFile)->
@@ -50,7 +49,8 @@ diff = (currFile)->
   tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
 
 log = (currFile)->
-  tortoiseSvn(["/command:log", "/path:."], path.dirname(currFile))
+  currpath = if currFile then currFile else "."
+  tortoiseSvn(["/command:log", "/path:"+currpath], path.dirname(currFile))
 
 revert = (currFile)->
   tortoiseSvn(["/command:revert", "/path:"+currFile], path.dirname(currFile))
@@ -65,82 +65,75 @@ module.exports = TortoiseSvn =
       description: "The folder containing TortoiseProc.exe"
       type: "string"
       default: "C:/Program Files/TortoiseSVN/bin"
+    tortoiseBlameAll:
+      title: "Blame all versions"
+      description: "Default to looking at all versions in the file's history. Uncheck to allow version selection."
+      type: "boolean"
+      default: true
 
   activate: (state) ->
-    atom.workspaceView.command "tortoise-svn:blameFromTreeView", => @blameFromTreeView()
-    atom.workspaceView.command "tortoise-svn:blameFromEditor", => @blameFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:blameFromTreeView": => @blameFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:blameFromEditor": => @blameFromEditor()
 
-    atom.workspaceView.command "tortoise-svn:commitFromTreeView", => @commitFromTreeView()
-    atom.workspaceView.command "tortoise-svn:commitFromEditor", => @commitFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:commitFromTreeView": => @commitFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:commitFromEditor": => @commitFromEditor()
 
-    atom.workspaceView.command "tortoise-svn:diffFromTreeView", => @diffFromTreeView()
-    atom.workspaceView.command "tortoise-svn:diffFromEditor", => @diffFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:diffFromTreeView": => @diffFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:diffFromEditor": => @diffFromEditor()
 
-    atom.workspaceView.command "tortoise-svn:logFromTreeView", => @logFromTreeView()
-    atom.workspaceView.command "tortoise-svn:logFromEditor", => @logFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:logFromTreeView": => @logFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:logFromEditor": => @logFromEditor()
 
-    atom.workspaceView.command "tortoise-svn:revertFromTreeView", => @revertFromTreeView()
-    atom.workspaceView.command "tortoise-svn:revertFromEditor", => @revertFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:revertFromTreeView": => @revertFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:revertFromEditor": => @revertFromEditor()
 
-    atom.workspaceView.command "tortoise-svn:updateFromTreeView", => @updateFromTreeView()
-    atom.workspaceView.command "tortoise-svn:updateFromEditor", => @updateFromEditor()
+    atom.commands.add "atom-workspace", "tortoise-svn:updateFromTreeView": => @updateFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
 
   blameFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    blame(currFile)
+    blame(currFile) if currFile?
 
   blameFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    blame(currFile)
+    blame(currFile) if currFile?
 
   commitFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    commit(currFile)
+    commit(currFile) if currFile?
 
   commitFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    commit(currFile)
+    commit(currFile) if currFile?
 
   diffFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    diff(currFile)
+    diff(currFile) if currFile?
 
   diffFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    diff(currFile)
+    diff(currFile) if currFile?
 
   logFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    log(currFile)
+    log(currFile) if currFile?
 
   logFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    log(currFile)
+    log(currFile) if currFile?
 
   revertFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    revert(currFile)
+    revert(currFile) if currFile?
 
   revertFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    revert(currFile)
+    revert(currFile) if currFile?
 
   updateFromTreeView: ->
     currFile = resolveTreeSelection()
-    return if !currFile
-    update(currFile)
+    update(currFile) if currFile?
 
   updateFromEditor: ->
     currFile = resolveEditorFile()
-    return if !currFile
-    update(currFile)
+    update(currFile) if currFile?
