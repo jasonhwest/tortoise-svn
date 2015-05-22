@@ -19,17 +19,11 @@ tortoiseSvn = (args, cwd) ->
     console.log "child process exited with code " + code
 
 resolveTreeSelection = ->
-  console.log "is tree-view loaded?"
   if atom.packages.isPackageLoaded("tree-view")
-    console.log "\tyes it is!"
     treeView = atom.packages.getLoadedPackage("tree-view")
-    console.log "\tgot tree-view package"
     treeView = require(treeView.mainModulePath)
-    console.log "\treduced to mainModulePath"
     serialView = treeView.serialize()
-    console.log "\tserializedView"
     serialView.selectedPath
-    console.log "\tpath of serialized view: ", serialView.selectedPath
 
 resolveEditorFile = ->
   editor = atom.workspace.getActivePaneItem()

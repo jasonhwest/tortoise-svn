@@ -1,3 +1,6 @@
+## 0.4.2 -
+* Remove debugging statements, fixes #4
+
 ## 0.4.1 - Bug fix
 * Add option to configure versions used in blame (defaults to all)
 * Update command definition to follow Atom API changes
