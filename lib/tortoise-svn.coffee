@@ -1,5 +1,6 @@
 {CompositeDisposable} = require "atom"
 path = require "path"
+fs = require "fs"
 
 tortoiseSvn = (args, cwd) ->
   spawn = require("child_process").spawn
@@ -31,26 +32,52 @@ resolveEditorFile = ->
   file?.path
 
 blame = (currFile)->
-  args = [ "/command:blame", "/path:"+currFile ]
+  stat = fs.statSync(currFile)
+  args =  [ "/command:blame" ]
+  if stat.isFile()
+    args.push("/path:"+path.basename(currFile))
+    cwd = path.dirname(currFile)
+  else
+    args.push("/path:.")
+    cwd = currFile
   args.push("/startrev:1", "/endrev:-1") if atom.config.get("tortoise-svn.tortoiseBlameAll")
-
-  tortoiseSvn(args, path.dirname(currFile))
+  tortoiseSvn(args, cwd)
 
 commit = (currFile)->
-  tortoiseSvn(["/command:commit", "/path:"+currFile], path.dirname(currFile))
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:commit", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:commit", "/path:."], currFile)
 
 diff = (currFile)->
-  tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
-
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:diff", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:diff", "/path:."], currFile)
+#+
 log = (currFile)->
-  currpath = if currFile then currFile else "."
-  tortoiseSvn(["/command:log", "/path:"+currpath], path.dirname(currFile))
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:log","/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:log","/path:."], currFile)
+
 
 revert = (currFile)->
-  tortoiseSvn(["/command:revert", "/path:"+currFile], path.dirname(currFile))
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:revert", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:revert", "/path:."], currFile)
 
 update = (currFile)->
-  tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:update", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:update", "/path:."], currFile)
 
 module.exports = TortoiseSvn =
   config:
