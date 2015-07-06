@@ -30,8 +30,14 @@ resolveEditorFile = ->
   file = editor?.buffer.file
   file?.path
 
-blame = (currFile)->
+resolveCurrentLineNumber = ->
+  editor = atom.workspace.getActiveTextEditor()
+  position = editor.getCursorBufferPosition()
+  position.row + 1
+
+blame = (currFile, currLineNum)->
   args = [ "/command:blame", "/path:"+currFile ]
+  args.push("/line:"+currLineNum) if currLineNum
   args.push("/startrev:1", "/endrev:-1") if atom.config.get("tortoise-svn.tortoiseBlameAll")
 
   tortoiseSvn(args, path.dirname(currFile))
@@ -90,7 +96,8 @@ module.exports = TortoiseSvn =
 
   blameFromEditor: ->
     currFile = resolveEditorFile()
-    blame(currFile) if currFile?
+    currLineNum = resolveCurrentLineNumber()
+    blame(currFile, currLineNum) if currFile?
 
   commitFromTreeView: ->
     currFile = resolveTreeSelection()
