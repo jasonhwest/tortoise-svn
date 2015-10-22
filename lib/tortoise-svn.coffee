@@ -42,6 +42,9 @@ commit = (currFile)->
 diff = (currFile)->
   tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
 
+lock = (currFile)->
+  tortoiseSvn(["/command:lock", "/path:"+currFile], path.dirname(currFile))
+
 log = (currFile)->
   currpath = if currFile then currFile else "."
   tortoiseSvn(["/command:log", "/path:"+currpath], path.dirname(currFile))
@@ -75,6 +78,9 @@ module.exports = TortoiseSvn =
     atom.commands.add "atom-workspace", "tortoise-svn:diffFromTreeView": => @diffFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:diffFromEditor": => @diffFromEditor()
 
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromTreeView": => @lockFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromEditor": => @lockFromEditor()
+
     atom.commands.add "atom-workspace", "tortoise-svn:logFromTreeView": => @logFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:logFromEditor": => @logFromEditor()
 
@@ -107,6 +113,14 @@ module.exports = TortoiseSvn =
   diffFromEditor: ->
     currFile = resolveEditorFile()
     diff(currFile) if currFile?
+
+  lockFromTreeView: ->
+    currFile = resolveTreeSelection()
+    lock(currFile) if currFile?
+
+  lockFromEditor: ->
+    currFile = resolveEditorFile()
+    lock(currFile) if currFile?
 
   logFromTreeView: ->
     currFile = resolveTreeSelection()

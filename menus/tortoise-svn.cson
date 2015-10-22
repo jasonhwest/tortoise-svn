@@ -17,6 +17,10 @@
           "command": "tortoise-svn:diffFromEditor"
         }
         {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromEditor"
+        }
+        {
           "label": "Log"
           "command": "tortoise-svn:logFromEditor"
         }
@@ -46,6 +50,10 @@
         {
           "label": "Diff"
           "command": "tortoise-svn:diffFromTreeView"
+        }
+        {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromTreeView"
         }
         {
           "label": "Log"
@@ -79,6 +87,10 @@
         {
           "label": "Diff"
           "command": "tortoise-svn:diffFromEditor"
+        }
+        {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromEditor"
         }
         {
           "label": "Log"
