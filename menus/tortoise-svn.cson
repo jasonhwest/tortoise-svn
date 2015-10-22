@@ -17,12 +17,20 @@
           "command": "tortoise-svn:diffFromEditor"
         }
         {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromEditor"
+        }
+        {
           "label": "Log"
           "command": "tortoise-svn:logFromEditor"
         }
         {
           "label": "Revert"
           "command": "tortoise-svn:revertFromEditor"
+        }
+        {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromEditor"
         }
         {
           "label": "Update"
@@ -48,12 +56,20 @@
           "command": "tortoise-svn:diffFromTreeView"
         }
         {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromTreeView"
+        }
+        {
           "label": "Log"
           "command": "tortoise-svn:logFromTreeView"
         }
         {
           "label": "Revert"
           "command": "tortoise-svn:revertFromTreeView"
+        }
+        {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromTreeView"
         }
         {
           "label": "Update"
@@ -81,12 +97,20 @@
           "command": "tortoise-svn:diffFromEditor"
         }
         {
+          "label": "Lock"
+          "command": "tortoise-svn:lockFromEditor"
+        }
+        {
           "label": "Log"
           "command": "tortoise-svn:logFromEditor"
         }
         {
           "label": "Revert"
           "command": "tortoise-svn:revertFromEditor"
+        }
+        {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromEditor"
         }
         {
           "label": "Update"

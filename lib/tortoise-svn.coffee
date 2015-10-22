@@ -42,12 +42,18 @@ commit = (currFile)->
 diff = (currFile)->
   tortoiseSvn(["/command:diff", "/path:"+currFile], path.dirname(currFile))
 
+lock = (currFile)->
+  tortoiseSvn(["/command:lock", "/path:"+currFile], path.dirname(currFile))
+
 log = (currFile)->
   currpath = if currFile then currFile else "."
   tortoiseSvn(["/command:log", "/path:"+currpath], path.dirname(currFile))
 
 revert = (currFile)->
   tortoiseSvn(["/command:revert", "/path:"+currFile], path.dirname(currFile))
+
+unlock = (currFile)->
+  tortoiseSvn(["/command:unlock", "/path:"+currFile], path.dirname(currFile))
 
 update = (currFile)->
   tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
@@ -75,11 +81,17 @@ module.exports = TortoiseSvn =
     atom.commands.add "atom-workspace", "tortoise-svn:diffFromTreeView": => @diffFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:diffFromEditor": => @diffFromEditor()
 
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromTreeView": => @lockFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromEditor": => @lockFromEditor()
+
     atom.commands.add "atom-workspace", "tortoise-svn:logFromTreeView": => @logFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:logFromEditor": => @logFromEditor()
 
     atom.commands.add "atom-workspace", "tortoise-svn:revertFromTreeView": => @revertFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:revertFromEditor": => @revertFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:unlockFromTreeView": => @unlockFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:unlockFromEditor": => @unlockFromEditor()
 
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromTreeView": => @updateFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
@@ -108,6 +120,14 @@ module.exports = TortoiseSvn =
     currFile = resolveEditorFile()
     diff(currFile) if currFile?
 
+  lockFromTreeView: ->
+    currFile = resolveTreeSelection()
+    lock(currFile) if currFile?
+
+  lockFromEditor: ->
+    currFile = resolveEditorFile()
+    lock(currFile) if currFile?
+
   logFromTreeView: ->
     currFile = resolveTreeSelection()
     log(currFile) if currFile?
@@ -123,6 +143,14 @@ module.exports = TortoiseSvn =
   revertFromEditor: ->
     currFile = resolveEditorFile()
     revert(currFile) if currFile?
+
+  unlockFromTreeView: ->
+    currFile = resolveTreeSelection()
+    unlock(currFile) if currFile?
+
+  unlockFromEditor: ->
+    currFile = resolveEditorFile()
+    unlock(currFile) if currFile?
 
   updateFromTreeView: ->
     currFile = resolveTreeSelection()

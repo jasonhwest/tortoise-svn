@@ -12,6 +12,8 @@
   "alt-b": "tortoise-svn:blameFromEditor"
   "alt-c": "tortoise-svn:commitFromEditor"
   "alt-d": "tortoise-svn:diffFromEditor"
+  "alt-k": "tortoise-svn:lockFromEditor"
   "alt-l": "tortoise-svn:logFromEditor"
   "alt-r": "tortoise-svn:revertFromEditor"
+  "alt-n": "tortoise-svn:unlockFromEditor"
   "alt-u": "tortoise-svn:updateFromEditor"

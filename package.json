@@ -11,10 +11,14 @@
       "tortoise-svn:commitFromEditor",
       "tortoise-svn:diffFromTreeView",
       "tortoise-svn:diffFromEditor",
+      "tortoise-svn:lockFromTreeView",
+      "tortoise-svn:lockFromEditor",
       "tortoise-svn:logFromTreeView",
       "tortoise-svn:logFromEditor",
       "tortoise-svn:revertFromTreeView",
       "tortoise-svn:revertFromEditor",
+      "tortoise-svn:unlockFromTreeView",
+      "tortoise-svn:unlockFromEditor",
       "tortoise-svn:updateFromTreeView",
       "tortoise-svn:updateFromEditor"
     ]
