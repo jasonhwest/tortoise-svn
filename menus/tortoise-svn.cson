@@ -29,6 +29,10 @@
           "command": "tortoise-svn:revertFromEditor"
         }
         {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromEditor"
+        }
+        {
           "label": "Update"
           "command": "tortoise-svn:updateFromEditor"
         }
@@ -62,6 +66,10 @@
         {
           "label": "Revert"
           "command": "tortoise-svn:revertFromTreeView"
+        }
+        {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromTreeView"
         }
         {
           "label": "Update"
@@ -99,6 +107,10 @@
         {
           "label": "Revert"
           "command": "tortoise-svn:revertFromEditor"
+        }
+        {
+          "label": "Unlock"
+          "command": "tortoise-svn:unlockFromEditor"
         }
         {
           "label": "Update"

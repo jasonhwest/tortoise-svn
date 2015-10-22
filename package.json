@@ -17,6 +17,8 @@
       "tortoise-svn:logFromEditor",
       "tortoise-svn:revertFromTreeView",
       "tortoise-svn:revertFromEditor",
+      "tortoise-svn:unlockFromTreeView",
+      "tortoise-svn:unlockFromEditor",
       "tortoise-svn:updateFromTreeView",
       "tortoise-svn:updateFromEditor"
     ]
