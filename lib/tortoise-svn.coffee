@@ -53,7 +53,7 @@ update = (currFile)->
   tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
 
 tsvnswitch = (currFile) ->
-  tortoiseSvn(["/command:switch", "/path:"path.dirname(currFile))
+  tortoiseSvn(["/command:switch", "/path:"+currFile], path.dirname(currFile))
 
 module.exports = TortoiseSvn =
   config:

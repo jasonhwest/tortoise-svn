@@ -16,7 +16,8 @@
       "tortoise-svn:revertFromTreeView",
       "tortoise-svn:revertFromEditor",
       "tortoise-svn:updateFromTreeView",
-      "tortoise-svn:updateFromEditor"
+      "tortoise-svn:updateFromEditor",
+      "tortoise-svn:switchFromTreeView"
     ]
   },
   "repository": "https://github.com/jasonhwest/tortoise-svn",
