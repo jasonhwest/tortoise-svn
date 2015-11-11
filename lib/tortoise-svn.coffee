@@ -52,6 +52,9 @@ revert = (currFile)->
 update = (currFile)->
   tortoiseSvn(["/command:update", "/path:"+currFile], path.dirname(currFile))
 
+tsvnswitch = (currFile) ->
+  tortoiseSvn(["/command:switch", "/path:"path.dirname(currFile))
+
 module.exports = TortoiseSvn =
   config:
     tortoisePath:
@@ -131,3 +134,7 @@ module.exports = TortoiseSvn =
   updateFromEditor: ->
     currFile = resolveEditorFile()
     update(currFile) if currFile?
+
+  switchFromEditor: ->
+    currFile = resolveEditorFile()
+    tsvnswitch(currFile) if currFile?

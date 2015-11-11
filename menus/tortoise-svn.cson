@@ -59,6 +59,10 @@
           "label": "Update"
           "command": "tortoise-svn:updateFromTreeView"
         }
+        {
+          "label": "Switch",
+          "command": "tortoise-svn:switchFromEditor"
+        }
       ]
     }
   ]
@@ -91,6 +95,10 @@
         {
           "label": "Update"
           "command": "tortoise-svn:updateFromEditor"
+        }
+        {
+          "label": "Switch",
+          "command": "tortoise-svn:switchFromEditor"
         }
       ]
     ]
