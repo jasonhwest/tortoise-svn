@@ -87,6 +87,8 @@ module.exports = TortoiseSvn =
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromTreeView": => @updateFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
 
+    atom.commands.add "atom-workspace", "tortoise-svn:switchFromTreeView": => @switchFromTreeView()
+
   blameFromTreeView: ->
     currFile = resolveTreeSelection()
     blame(currFile) if currFile?
@@ -135,6 +137,6 @@ module.exports = TortoiseSvn =
     currFile = resolveEditorFile()
     update(currFile) if currFile?
 
-  switchFromEditor: ->
-    currFile = resolveEditorFile()
+  switchFromTreeView: ->
+    currFile = resolveTreeSelection()
     tsvnswitch(currFile) if currFile?
