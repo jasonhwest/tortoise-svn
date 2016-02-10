@@ -17,7 +17,17 @@
       "tortoise-svn:revertFromEditor",
       "tortoise-svn:updateFromTreeView",
       "tortoise-svn:updateFromEditor",
-      "tortoise-svn:switchFromTreeView"
+      "tortoise-svn:switchFromTreeView",
+      "tortoise-svn:addFromTreeView",
+      "tortoise-svn:addFromEditor",
+      "tortoise-svn:renameFromTreeView",
+      "tortoise-svn:renameFromEditor",
+      "tortoise-svn:moveFromTreeView",
+      "tortoise-svn:moveFromEditor",
+      "tortoise-svn:lockFromTreeView",
+      "tortoise-svn:lockFromEditor",
+      "tortoise-svn:unlockFromTreeView",
+      "tortoise-svn:unlockFromEditor"
     ]
   },
   "repository": "https://github.com/jasonhwest/tortoise-svn",

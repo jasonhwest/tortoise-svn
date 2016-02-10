@@ -88,6 +88,41 @@ tsvnswitch = (currFile) ->
 
   tortoiseSvn(["/command:switch", "/path:"+target], target)
 
+add = (currFile) ->
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:add", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:add", "/path:."], currFile)
+
+rename = (currFile) ->
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:rename", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:rename", "/path:."], currFile)
+
+move = (currFile) ->
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:relocate", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:relocate", "/path:."], currFile)
+
+lock = (currFile) ->
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:lock", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:lock", "/path:."], currFile)
+
+unlock = (currFile) ->
+  stat = fs.statSync(currFile)
+  if stat.isFile()
+    tortoiseSvn(["/command:unlock", "/path:"+path.basename(currFile)], path.dirname(currFile))
+  else
+    tortoiseSvn(["/command:unlock", "/path:."], currFile)
+
 module.exports = TortoiseSvn =
   config:
     tortoisePath:
@@ -122,6 +157,21 @@ module.exports = TortoiseSvn =
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
 
     atom.commands.add "atom-workspace", "tortoise-svn:switchFromTreeView": => @switchFromTreeView()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:addFromTreeView": => @addFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:addFromEditor": => @addFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:renameFromTreeView": => @renameFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:renameFromEditor": => @renameFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:moveFromTreeView": => @moveFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:moveFromEditor": => @moveFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromTreeView": => @lockFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:lockFromEditor": => @lockFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:unlockFromTreeView": => @unlockFromTreeView()
+    atom.commands.add "atom-workspace", "tortoise-svn:unlockFromEditor": => @unlockFromEditor()
 
   blameFromTreeView: ->
     currFile = resolveTreeSelection()
@@ -174,3 +224,43 @@ module.exports = TortoiseSvn =
   switchFromTreeView: ->
     currFile = resolveTreeSelection()
     tsvnswitch(currFile) if currFile?
+
+  addFromTreeView: ->
+    currFile = resolveTreeSelection()
+    add(currFile) if currFile?
+
+  addFromEditor: ->
+    currFile = resolveEditorFile()
+    add(currFile) if currFile?
+
+  renameFromTreeView: ->
+    currFile = resolveTreeSelection()
+    rename(currFile) if currFile?
+
+  renameFromEditor: ->
+    currFile = resolveEditorFile()
+    rename(currFile) if currFile?
+
+  moveFromTreeView: ->
+    currFile = resolveTreeSelection()
+    move(currFile) if currFile?
+
+  moveFromEditor: ->
+    currFile = resolveEditorFile()
+    move(currFile) if currFile?
+
+  lockFromTreeView: ->
+    currFile = resolveTreeSelection()
+    lock(currFile) if currFile?
+
+  lockFromEditor: ->
+    currFile = resolveEditorFile()
+    lock(currFile) if currFile?
+
+  unlockFromTreeView: ->
+    currFile = resolveTreeSelection()
+    unlock(currFile) if currFile?
+
+  unlockFromEditor: ->
+    currFile = resolveEditorFile()
+    unlock(currFile) if currFile?
