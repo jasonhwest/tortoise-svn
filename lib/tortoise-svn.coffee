@@ -79,6 +79,9 @@ update = (currFile)->
   else
     tortoiseSvn(["/command:update", "/path:."], currFile)
 
+tsvnswitch = (currFile) ->
+  tortoiseSvn(["/command:switch", "/path:"+currFile], path.dirname(currFile))
+
 module.exports = TortoiseSvn =
   config:
     tortoisePath:
@@ -110,6 +113,8 @@ module.exports = TortoiseSvn =
 
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromTreeView": => @updateFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
+
+    atom.commands.add "atom-workspace", "tortoise-svn:switchFromTreeView": => @switchFromTreeView()
 
   blameFromTreeView: ->
     currFile = resolveTreeSelection()
@@ -158,3 +163,7 @@ module.exports = TortoiseSvn =
   updateFromEditor: ->
     currFile = resolveEditorFile()
     update(currFile) if currFile?
+
+  switchFromTreeView: ->
+    currFile = resolveTreeSelection()
+    tsvnswitch(currFile) if currFile?
