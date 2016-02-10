@@ -1,5 +1,6 @@
 ## 0.4.3 -
 * Merge PR from [Odhrean](https://github.com/Odhrean) addressing spaces in directory
+* Merge PR from [williamokano](https://github.com/williamokano) adding switch option with some minor refactoring
 
 ## 0.4.2 -
 * Remove debugging statements, fixes #4

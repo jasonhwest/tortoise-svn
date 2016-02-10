@@ -80,7 +80,13 @@ update = (currFile)->
     tortoiseSvn(["/command:update", "/path:."], currFile)
 
 tsvnswitch = (currFile) ->
-  tortoiseSvn(["/command:switch", "/path:"+currFile], path.dirname(currFile))
+  stat = fs.statSync(currFile)
+  if stat.isDirectory()
+    target = currFile
+  else
+    target = path.parse(currFile).dir
+
+  tortoiseSvn(["/command:switch", "/path:"+target], target)
 
 module.exports = TortoiseSvn =
   config:
@@ -91,7 +97,8 @@ module.exports = TortoiseSvn =
       default: "C:/Program Files/TortoiseSVN/bin"
     tortoiseBlameAll:
       title: "Blame all versions"
-      description: "Default to looking at all versions in the file's history. Uncheck to allow version selection."
+      description: "Default to looking at all versions in the file's history." +
+        " Uncheck to allow version selection."
       type: "boolean"
       default: true
 
