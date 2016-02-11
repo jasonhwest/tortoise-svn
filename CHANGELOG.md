@@ -1,7 +1,7 @@
 ## 0.5.0 -
 * Merge PR from [Odhrean](https://github.com/Odhrean) addressing spaces in directory
 * Merge PR from [williamokano](https://github.com/williamokano) adding switch option with some minor refactoring
-* Add command support for additional commands (add, rename, relocate, lock, unlock)
+* Add command support for additional commands (add, rename, lock, unlock)
 
 ## 0.4.2 -
 * Remove debugging statements, fixes #4
