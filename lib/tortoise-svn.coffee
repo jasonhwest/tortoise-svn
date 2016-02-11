@@ -40,7 +40,11 @@ blame = (currFile)->
   else
     args.push("/path:.")
     cwd = currFile
-  args.push("/startrev:1", "/endrev:-1") if atom.config.get("tortoise-svn.tortoiseBlameAll")
+  # there is a problem with TortoiseSVN 1.9+ and passing the -1 as the endrev value
+  #     the -1 is interpreted as another paramater
+  #     quoting works from the command line (i.e. /endrev:"-1")
+  # args.push("/startrev:1", "/endrev:-1") if atom.config.get("tortoise-svn.tortoiseBlameAll")
+  # console.log "invoking tortoisesvn with args=", args
   tortoiseSvn(args, cwd)
 
 commit = (currFile)->
@@ -102,13 +106,6 @@ rename = (currFile) ->
   else
     tortoiseSvn(["/command:rename", "/path:."], currFile)
 
-move = (currFile) ->
-  stat = fs.statSync(currFile)
-  if stat.isFile()
-    tortoiseSvn(["/command:relocate", "/path:"+path.basename(currFile)], path.dirname(currFile))
-  else
-    tortoiseSvn(["/command:relocate", "/path:."], currFile)
-
 lock = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
@@ -163,9 +160,6 @@ module.exports = TortoiseSvn =
 
     atom.commands.add "atom-workspace", "tortoise-svn:renameFromTreeView": => @renameFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:renameFromEditor": => @renameFromEditor()
-
-    atom.commands.add "atom-workspace", "tortoise-svn:moveFromTreeView": => @moveFromTreeView()
-    atom.commands.add "atom-workspace", "tortoise-svn:moveFromEditor": => @moveFromEditor()
 
     atom.commands.add "atom-workspace", "tortoise-svn:lockFromTreeView": => @lockFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:lockFromEditor": => @lockFromEditor()
@@ -240,14 +234,6 @@ module.exports = TortoiseSvn =
   renameFromEditor: ->
     currFile = resolveEditorFile()
     rename(currFile) if currFile?
-
-  moveFromTreeView: ->
-    currFile = resolveTreeSelection()
-    move(currFile) if currFile?
-
-  moveFromEditor: ->
-    currFile = resolveEditorFile()
-    move(currFile) if currFile?
 
   lockFromTreeView: ->
     currFile = resolveTreeSelection()
