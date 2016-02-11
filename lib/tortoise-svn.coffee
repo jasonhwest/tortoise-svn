@@ -136,6 +136,12 @@ module.exports = TortoiseSvn =
         " Uncheck to allow version selection."
       type: "boolean"
       default: true
+    rootFolder:
+      title: "Root folder"
+      description: "Specify the root folder to be used for all folder commands." +
+        " Leave this value empty to allow the plugin to resolve the folder."
+      type: "string"
+      default: ""
 
   activate: (state) ->
     atom.commands.add "atom-workspace", "tortoise-svn:blameFromTreeView": => @blameFromTreeView()
