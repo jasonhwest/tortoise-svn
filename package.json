@@ -7,6 +7,7 @@
     "atom-workspace": [
       "tortoise-svn:blameFromTreeView",
       "tortoise-svn:blameFromEditor",
+      "tortoise-svn:commitFromRoot",
       "tortoise-svn:commitFromTreeView",
       "tortoise-svn:commitFromEditor",
       "tortoise-svn:diffFromTreeView",
@@ -15,6 +16,7 @@
       "tortoise-svn:logFromEditor",
       "tortoise-svn:revertFromTreeView",
       "tortoise-svn:revertFromEditor",
+      "tortoise-svn:updateFromRoot",
       "tortoise-svn:updateFromTreeView",
       "tortoise-svn:updateFromEditor",
       "tortoise-svn:switchFromTreeView",
