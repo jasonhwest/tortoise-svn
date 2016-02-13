@@ -56,14 +56,13 @@ diff = (currFile)->
     tortoiseSvn(["/command:diff", "/path:"+path.basename(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:diff", "/path:."], currFile)
-#+
+
 log = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
     tortoiseSvn(["/command:log","/path:"+path.basename(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:log","/path:."], currFile)
-
 
 revert = (currFile)->
   stat = fs.statSync(currFile)
@@ -102,13 +101,6 @@ rename = (currFile) ->
   else
     tortoiseSvn(["/command:rename", "/path:."], currFile)
 
-move = (currFile) ->
-  stat = fs.statSync(currFile)
-  if stat.isFile()
-    tortoiseSvn(["/command:relocate", "/path:"+path.basename(currFile)], path.dirname(currFile))
-  else
-    tortoiseSvn(["/command:relocate", "/path:."], currFile)
-
 lock = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
@@ -125,6 +117,12 @@ unlock = (currFile) ->
 
 module.exports = TortoiseSvn =
   config:
+    rootFolder:
+      title: "Root folder"
+      description: "Specify the root folder to be used for all folder commands." +
+        " Leave this value empty to allow the plugin to resolve the folder."
+      type: "string"
+      default: ""
     tortoisePath:
       title: "Tortoise SVN bin path"
       description: "The folder containing TortoiseProc.exe"
@@ -136,17 +134,12 @@ module.exports = TortoiseSvn =
         " Uncheck to allow version selection."
       type: "boolean"
       default: true
-    rootFolder:
-      title: "Root folder"
-      description: "Specify the root folder to be used for all folder commands." +
-        " Leave this value empty to allow the plugin to resolve the folder."
-      type: "string"
-      default: ""
 
   activate: (state) ->
     atom.commands.add "atom-workspace", "tortoise-svn:blameFromTreeView": => @blameFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:blameFromEditor": => @blameFromEditor()
 
+    atom.commands.add "atom-workspace", "tortoise-svn:commitFromRoot": => @commitFromRoot()
     atom.commands.add "atom-workspace", "tortoise-svn:commitFromTreeView": => @commitFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:commitFromEditor": => @commitFromEditor()
 
@@ -159,6 +152,7 @@ module.exports = TortoiseSvn =
     atom.commands.add "atom-workspace", "tortoise-svn:revertFromTreeView": => @revertFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:revertFromEditor": => @revertFromEditor()
 
+    atom.commands.add "atom-workspace", "tortoise-svn:updateFromRoot": => @updateFromRoot()
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromTreeView": => @updateFromTreeView()
     atom.commands.add "atom-workspace", "tortoise-svn:updateFromEditor": => @updateFromEditor()
 
@@ -186,6 +180,10 @@ module.exports = TortoiseSvn =
   blameFromEditor: ->
     currFile = resolveEditorFile()
     blame(currFile) if currFile?
+
+  commitFromRoot: ->
+    currFile = atom.config.get("tortoise-svn.rootFolder")
+    commit(currFile) if currFile?
 
   commitFromTreeView: ->
     currFile = resolveTreeSelection()
@@ -218,6 +216,10 @@ module.exports = TortoiseSvn =
   revertFromEditor: ->
     currFile = resolveEditorFile()
     revert(currFile) if currFile?
+
+  updateFromRoot: ->
+    currFile = atom.config.get("tortoise-svn.rootFolder")
+    update(currFile) if currFile?
 
   updateFromTreeView: ->
     currFile = resolveTreeSelection()
