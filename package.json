@@ -1,7 +1,7 @@
 {
   "name": "tortoise-svn",
   "main": "./lib/tortoise-svn",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "An Atom Plugin for users of TortoiseSvn for Windows",
   "activationCommands": {
     "atom-workspace": [
@@ -24,8 +24,6 @@
       "tortoise-svn:addFromEditor",
       "tortoise-svn:renameFromTreeView",
       "tortoise-svn:renameFromEditor",
-      "tortoise-svn:moveFromTreeView",
-      "tortoise-svn:moveFromEditor",
       "tortoise-svn:lockFromTreeView",
       "tortoise-svn:lockFromEditor",
       "tortoise-svn:unlockFromTreeView",

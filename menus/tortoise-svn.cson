@@ -29,10 +29,6 @@
           "command": "tortoise-svn:logFromEditor"
         }
         {
-          "label": "Move"
-          "command": "tortoise-svn:moveFromEditor"
-        }
-        {
           "label": "Rename"
           "command": "tortoise-svn:renameFromEditor"
         }
@@ -78,10 +74,6 @@
         {
           "label": "Log"
           "command": "tortoise-svn:logFromTreeView"
-        }
-        {
-          "label": "Move"
-          "command": "tortoise-svn:moveFromTreeView"
         }
         {
           "label": "Rename"
@@ -135,10 +127,6 @@
         {
           "label": "Log"
           "command": "tortoise-svn:logFromEditor"
-        }
-        {
-          "label": "Move"
-          "command": "tortoise-svn:moveFromEditor"
         }
         {
           "label": "Rename"
