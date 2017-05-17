@@ -22,9 +22,8 @@ tortoiseSvn = (args, cwd) ->
 resolveTreeSelection = ->
   if atom.packages.isPackageLoaded("tree-view")
     treeView = atom.packages.getLoadedPackage("tree-view")
-    treeView = require(treeView.mainModulePath)
-    serialView = treeView.serialize()
-    serialView.selectedPath
+    treeView = treeView.mainModule.treeView
+    treeView.selectedPath
 
 resolveEditorFile = ->
   editor = atom.workspace.getActivePaneItem()
