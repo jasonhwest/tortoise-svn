@@ -2,11 +2,25 @@
 path = require "path"
 fs = require "fs"
 
+quotePath = (path) ->
+  # Adds quotes (") to beginning and end of string
+  '"' + path + '"'
+
 tortoiseSvn = (args, cwd) ->
   spawn = require("child_process").spawn
   command = atom.config.get("tortoise-svn.tortoisePath") + "/TortoiseProc.exe"
   options =
     cwd: cwd
+    windowsVerbatimArguments: true
+
+  # Arguments that contain spaces are not interpreted correctly
+  # so we create a string from all arguments, split this string
+  # on each space and repackage as a new array.
+  # args = args.toString().split(" ")
+
+  console.log "CWD: " + cwd
+  console.log "Spawning: " + command
+  console.log "Arguments: " + args
 
   tProc = spawn(command, args, options)
 
@@ -49,21 +63,21 @@ blame = (currFile)->
 commit = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:commit", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:commit", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:commit", "/path:."], currFile)
 
 diff = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:diff", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:diff", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:diff", "/path:."], currFile)
 #+
 log = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:log","/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:log","/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:log","/path:."], currFile)
 
@@ -71,14 +85,14 @@ log = (currFile)->
 revert = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:revert", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:revert", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:revert", "/path:."], currFile)
 
 update = (currFile)->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:update", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:update", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:update", "/path:."], currFile)
 
@@ -89,33 +103,37 @@ tsvnswitch = (currFile) ->
   else
     target = path.parse(currFile).dir
 
-  tortoiseSvn(["/command:switch", "/path:"+target], target)
+  tortoiseSvn(["/command:switch", "/path:"+quotePath(target)], target)
 
 add = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:add", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    console.log "We are in add = (currFile) -> stat.isFile() == True"
+    console.log "currFile: " + currFile
+    tortoiseSvn(["/command:add", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
+    console.log "We are in add = (currFile) -> stat.isFile() == False"
+    console.log "currFile: " + currFile
     tortoiseSvn(["/command:add", "/path:."], currFile)
 
 rename = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:rename", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:rename", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:rename", "/path:."], currFile)
 
 lock = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:lock", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:lock", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:lock", "/path:."], currFile)
 
 unlock = (currFile) ->
   stat = fs.statSync(currFile)
   if stat.isFile()
-    tortoiseSvn(["/command:unlock", "/path:"+path.basename(currFile)], path.dirname(currFile))
+    tortoiseSvn(["/command:unlock", "/path:"+quotePath(currFile)], path.dirname(currFile))
   else
     tortoiseSvn(["/command:unlock", "/path:."], currFile)
 
